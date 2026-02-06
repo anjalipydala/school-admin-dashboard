@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase";
-import Login from "./Login";
+
+import Login from "./pages/Login";
 import Dashboard from "./Dashboard";
 
 function App() {
@@ -13,10 +14,13 @@ function App() {
       setUser(currentUser);
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
 
   return user ? <Dashboard /> : <Login />;
 }

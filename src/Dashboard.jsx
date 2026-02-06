@@ -3,23 +3,27 @@ import { auth } from "./firebase";
 
 export default function Dashboard() {
   const handleLogout = async () => {
-    await signOut(auth);
+    try {
+      await signOut(auth);
+      console.log("Logged out successfully");
+    } catch (err) {
+      console.error("Logout error:", err);
+    }
   };
 
   return (
     <div style={{ padding: 40 }}>
-      <h1>School Admin Dashboard</h1>
-      <p>Welcome! You are logged in.</p>
+      <h1>Admin Dashboard</h1>
 
       <button
         onClick={handleLogout}
         style={{
           padding: "10px 20px",
-          background: "#ff4d4d",
+          background: "#dc2626",
           color: "white",
           border: "none",
-          borderRadius: 5,
-          cursor: "pointer"
+          borderRadius: 6,
+          cursor: "pointer",
         }}
       >
         Logout
