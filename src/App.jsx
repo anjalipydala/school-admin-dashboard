@@ -1,32 +1,27 @@
-import React from "react";
-import Header from "./components/Header.jsx";
-import Sidebar from "./components/Sidebar.jsx";
-import Card from "./components/Card.jsx";
-import Button from "./components/Button.jsx";
-import "./index.css"; // optional styling
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
   return (
-    <div className="dashboard">
-      {/* Sidebar */}
-      <Sidebar />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
 
-      {/* Main Content */}
-      <div className="main">
-        <Header />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
 
-        {/* Cards */}
-        <div className="cards">
-          <Card title="Students" value="800" />
-          <Card title="Teachers" value="50" />
-          <Card title="Admins" value="3" />
-        </div>
-
-        {/* Button */}
-        <div style={{ marginTop: "20px" }}>
-          <Button label="Add Student" onClick={() => alert("Add Student Clicked")} />
-        </div>
-      </div>
-    </div>
+        {/* Force login first */}
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
